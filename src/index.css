@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
+.bg-gradient {
+  @apply bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen text-white;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
