@@ -2,8 +2,24 @@ import { CustomJumbotron } from '@/components/custom/CustomJumbotron';
 import { HeroStats } from '@/heroes/components/HeroStats';
 import { SearchControls } from './ui/SearchControls';
 import { CustomBreadcrumbs } from '@/components/custom/CustomBreadCrumb';
+import { useSearchHero } from '@/heroes/hooks/useSearchHero';
+import { useSearchParams } from 'react-router';
+import { HeroGrid } from '@/heroes/components/HeroGrid';
 
 export const SearchPage = () => {
+  const [searchParams] = useSearchParams();
+  
+  
+  //queryparams
+  const name = searchParams.get("name") ?? undefined;
+  const team = searchParams.get("team") ?? undefined;
+  const category = searchParams.get("category") ?? undefined;
+  const universe = searchParams.get("universe") ?? undefined;
+  const status = searchParams.get("status") ?? undefined;
+  const strength = searchParams.get("strength") ?? undefined;
+
+  const { data: hero = [] } = useSearchHero(name, team, category, universe, status, strength);
+
   return (
     <>
       <CustomJumbotron
@@ -13,11 +29,6 @@ export const SearchPage = () => {
 
       <CustomBreadcrumbs
         currentPage="Buscador de héroes"
-        // breadcrumbs={[
-        //   { label: 'Home1', to: '/' },
-        //   { label: 'Home2', to: '/' },
-        //   { label: 'Home3', to: '/' },
-        // ]}
       />
 
       {/* Stats Dashboard */}
@@ -25,6 +36,7 @@ export const SearchPage = () => {
 
       {/* Filter and search */}
       <SearchControls />
+      <HeroGrid heroes={hero}/>
     </>
   );
 };

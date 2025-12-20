@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { use, useMemo } from "react";
 import { useSearchParams } from "react-router";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -10,9 +10,11 @@ import { CustomBreadcrumbs } from "@/components/custom/CustomBreadCrumb";
 
 import { useHeroSummary } from "@/heroes/hooks/useHeroSummary";
 import { useHeroPaginated } from "@/heroes/hooks/useHeroPaginated";
+import { FavoriteHeroContext } from "@/heroes/context/FavoriteHeroesContext";
 
 export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const {favoriteCount, favorites} = use(FavoriteHeroContext);
 
   //queryparams
   const activeTab = searchParams.get("tab") ?? "all";
@@ -64,11 +66,13 @@ export const HomePage = () => {
               onClick={() =>
                 setSearchParams((prev) => {
                   prev.set("tab", "favorites");
+                  prev.set("category", "favorites");
+                  prev.set("page", "1");
                   return prev;
                 })
               }
             >
-              Favorites (3)
+              Favorites ({favoriteCount})
             </TabsTrigger>
             <TabsTrigger
               value="heroes"
@@ -106,7 +110,7 @@ export const HomePage = () => {
           <TabsContent value="favorites">
             {/* Mostrar todos los personajes favoritos */}
             <h1>Favoritos</h1>
-            <HeroGrid heroes={[]} />
+            <HeroGrid heroes={favorites} />
           </TabsContent>
           <TabsContent value="heroes">
             {/* Mostrar todos los héroes */}
