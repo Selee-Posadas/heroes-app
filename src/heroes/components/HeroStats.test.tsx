@@ -132,7 +132,7 @@ describe('HeroStats', () => {
   });
 
   test('should render HeroStats with mock information', () => {
-    const { container } = renderHeroStats(mockSummaryData);
+    renderHeroStats(mockSummaryData);
     expect(screen.getByText('Total de personajes')).toBeDefined();
     expect(screen.getByText('Favoritos')).toBeDefined();
     expect(screen.getByText('Fuerza')).toBeDefined();

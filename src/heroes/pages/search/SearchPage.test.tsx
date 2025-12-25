@@ -53,21 +53,21 @@ describe("SearchPage", () => {
   });
 
   test("should call search action with the name parameter", () => {
-    const { container } = renderSearchPage(["/search?name=superman"]);
+    renderSearchPage(["/search?name=superman"]);
     expect(mockSearchHeroesAction).toHaveBeenCalledWith({
       name: "superman",
       strength: undefined,
     });
   });
   test("should call search action with the strength parameter", () => {
-    const { container } = renderSearchPage(["/search?strength=6"]);
+    renderSearchPage(["/search?strength=6"]);
     expect(mockSearchHeroesAction).toHaveBeenCalledWith({
       name: undefined,
       strength: "6",
     });
   });
   test("should call search action with the strength and name parameters", () => {
-    const { container } = renderSearchPage([
+      renderSearchPage([
       "/search?name=superman&strength=10",
     ]);
     expect(mockSearchHeroesAction).toHaveBeenCalledWith({
